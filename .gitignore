@@ -1,0 +1,7 @@
+*.key
+*.pem
+.env
+.env.*
+node_modules/
+nova.pid
+*.log

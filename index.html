@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050816">
+<title>NOVA — Digital Asset</title>
+
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:#030611;color:#fff}
+body{overflow-x:hidden}
+
+.bg{
+position:fixed;inset:0;z-index:-2;
+background:
+radial-gradient(circle at 50% 20%,rgba(70,100,255,.22),transparent 35%),
+radial-gradient(circle at 20% 80%,rgba(120,40,255,.15),transparent 35%),
+radial-gradient(circle at 80% 70%,rgba(0,180,255,.12),transparent 35%),
+#030611;
+}
+
+.stars{
+position:fixed;inset:0;z-index:-1;opacity:.55;
+background-image:
+radial-gradient(1px 1px at 10% 20%,#fff,transparent),
+radial-gradient(1px 1px at 30% 70%,#fff,transparent),
+radial-gradient(1px 1px at 70% 30%,#fff,transparent),
+radial-gradient(1px 1px at 85% 80%,#fff,transparent),
+radial-gradient(1px 1px at 55% 55%,#fff,transparent);
+background-size:260px 260px;
+}
+
+nav{
+display:flex;justify-content:space-between;align-items:center;
+padding:18px 5%;border-bottom:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(15px);position:sticky;top:0;z-index:20;
+background:rgba(3,6,17,.72)
+}
+
+.logo{font-size:25px;font-weight:900;letter-spacing:4px}
+button{
+border:1px solid rgba(120,170,255,.45);
+background:rgba(15,25,55,.8);color:#fff;
+border-radius:14px;padding:12px 18px;font-weight:800;
+cursor:pointer
+}
+button:hover{box-shadow:0 0 25px rgba(80,130,255,.25)}
+
+main{max-width:1150px;margin:auto;padding:70px 20px}
+
+.hero{text-align:center}
+.badge{
+display:inline-block;padding:8px 14px;border-radius:99px;
+border:1px solid rgba(120,170,255,.25);
+background:rgba(30,50,100,.25);font-size:12px;
+letter-spacing:2px
+}
+
+.core{
+width:150px;height:150px;border-radius:50%;
+margin:35px auto;
+display:grid;place-items:center;
+font-size:55px;font-weight:900;
+background:radial-gradient(circle,#fff 0%,#72a8ff 8%,#304bff 38%,#0b1030 72%);
+box-shadow:0 0 35px #405cff,0 0 100px rgba(70,90,255,.35);
+animation:pulse 3s infinite
+}
+
+@keyframes pulse{
+50%{transform:scale(1.05);box-shadow:0 0 55px #405cff,0 0 130px rgba(70,90,255,.4)}
+}
+
+h1{font-size:clamp(45px,9vw,100px);margin:0;letter-spacing:8px}
+.sub{color:#93a3ca;font-size:18px;margin:20px auto 35px;max-width:650px}
+
+.grid{
+display:grid;grid-template-columns:repeat(4,1fr);
+gap:14px;margin-top:50px
+}
+
+.card{
+padding:22px;border:1px solid rgba(255,255,255,.08);
+border-radius:20px;background:rgba(10,17,38,.68);
+backdrop-filter:blur(15px)
+}
+
+.label{font-size:11px;color:#7180a6;letter-spacing:1.5px}
+.value{font-size:22px;font-weight:900;margin-top:10px;word-break:break-word}
+
+section{margin-top:25px}
+
+.panel{
+padding:28px;border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+background:rgba(8,14,31,.72)
+}
+
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+
+.muted{color:#7180a6}
+.success{color:#65ffb2}
+
+footer{text-align:center;color:#526080;padding:50px 20px}
+
+@media(max-width:700px){
+nav{padding:15px}
+.grid{grid-template-columns:repeat(2,1fr)}
+main{padding:45px 15px}
+.card{padding:16px}
+.value{font-size:17px}
+.core{width:120px;height:120px;font-size:42px}
+}
+</style>
+</head>
+
+<body>
+<div class="bg"></div>
+<div class="stars"></div>
+
+<nav>
+<div class="logo">NOVA</div>
+<button id="connect">CONNECT WALLET</button>
+</nav>
+
+<main>
+
+<div class="hero">
+<div class="badge">NOVA DIGITAL ASSET</div>
+<div class="core">N</div>
+<h1>NOVA</h1>
+<div class="sub">
+A community-driven digital asset interface.
+Connect your wallet and interact directly with the NOVA token.
+</div>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="label">TOTAL SUPPLY</div>
+<div class="value" id="supply">1,000,000,000</div>
+</div>
+
+<div class="card">
+<div class="label">YOUR BALANCE</div>
+<div class="value" id="balance">—</div>
+</div>
+
+<div class="card">
+<div class="label">NETWORK</div>
+<div class="value" id="network">—</div>
+</div>
+
+<div class="card">
+<div class="label">TOKEN</div>
+<div class="value">NOVA</div>
+</div>
+
+</div>
+
+<section>
+<div class="panel">
+<h2>NOVA Wallet</h2>
+<p class="muted">
+Your wallet remains under your control. The website does not receive or store private keys.
+</p>
+
+<div class="actions">
+<button id="addToken">ADD NOVA TO WALLET</button>
+<button id="copyContract">COPY CONTRACT</button>
+</div>
+
+<p id="status" class="muted">Wallet not connected.</p>
+</div>
+</section>
+
+<section>
+<div class="panel">
+<h2>Token Information</h2>
+<p>Symbol: <b>NOVA</b></p>
+<p>Decimals: <b>18</b></p>
+<p>Maximum supply currently deployed: <b>1,000,000,000 NOVA</b></p>
+<p>Contract:</p>
+<p style="word-break:break-all" id="contract"></p>
+</div>
+</section>
+
+</main>
+
+<footer>
+NOVA © 2026 — Experimental Web3 MVP
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.15.0/dist/ethers.umd.min.js"></script>
+
+<script>
+const CONTRACT="0x2fc810fdbfb58933496a11c4ff4a22dbae12641b";
+
+const ABI=[
+"function balanceOf(address) view returns(uint256)",
+"function totalSupply() view returns(uint256)"
+];
+
+document.getElementById("contract").textContent=CONTRACT;
+
+document.getElementById("copyContract").onclick=async()=>{
+await navigator.clipboard.writeText(CONTRACT);
+document.getElementById("status").textContent="Contract copied.";
+};
+
+document.getElementById("connect").onclick=connect;
+
+async function connect(){
+
+if(!window.ethereum){
+alert("Install/open MetaMask to connect.");
+return;
+}
+
+try{
+
+const accounts=await window.ethereum.request({
+method:"eth_requestAccounts"
+});
+
+const provider=new ethers.BrowserProvider(window.ethereum);
+const signer=await provider.getSigner();
+const address=await signer.getAddress();
+
+const network=await provider.getNetwork();
+
+document.getElementById("network").textContent=
+"Chain "+network.chainId.toString();
+
+const token=new ethers.Contract(CONTRACT,ABI,provider);
+
+const balance=await token.balanceOf(address);
+
+document.getElementById("balance").textContent=
+Number(ethers.formatEther(balance)).toLocaleString()+" NOVA";
+
+document.getElementById("connect").textContent=
+address.slice(0,6)+"..."+address.slice(-4);
+
+document.getElementById("status").innerHTML=
+'<span class="success">Wallet connected</span>';
+
+}catch(e){
+
+console.error(e);
+
+document.getElementById("status").textContent=
+"Wallet connection failed.";
+
+}
+
+}
+
+document.getElementById("addToken").onclick=async()=>{
+
+if(!window.ethereum){
+alert("MetaMask required.");
+return;
+}
+
+try{
+
+await window.ethereum.request({
+method:"wallet_watchAsset",
+params:{
+type:"ERC20",
+options:{
+address:CONTRACT,
+symbol:"NOVA",
+decimals:18
+}
+}
+});
+
+}catch(e){
+console.error(e);
+}
+
+};
+</script>
+
+</body>
+</html>
